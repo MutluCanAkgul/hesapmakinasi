@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hesap Makinesi</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+    body{
+        background-color: rgb(42, 97, 160)
+    }
+    .box{
+        max-width: 300px;
+        height: 400px;
+        margin-top: 17%;
+        margin-left: 42%;
+        background-color: aqua;
+        text-align: center;
+        align-items: center;
+        border: 2px solid black;
+        border-radius: 7px;
+
+    }
+    .textbox{
+        background-color: white;
+        width: 280px;
+        height: 40px;
+        align-items: center ;
+        text-align: right ;
+        padding:  0 0 0 3%;
+        border: 2px solid black;
+        border-radius: 7px;
+        margin-top: 10px;
+        
+        font-size: 30px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        text-transform: capitalize;
+        
+        
+    }
+  
+     .nokta{
+        background-color:  rgb(33, 137, 255);
+        height: 60px;
+        width: 93px;
+        border: 2px solid black;
+        border-radius: 7px;
+        margin-top: 15px;
+        font-size: 20px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        
+     }
+     .clear{
+        background-color:  rgb(255, 19, 19);
+        height: 60px;
+        width: 93px;
+        border: 2px solid black;
+        border-radius: 7px;
+        margin-top: 15px;
+        font-size: 20px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+     }
+   
+    .operator{
+  background-color: rgb(81, 98, 255);
+  height: 60px;
+  width: 60px;
+  border: 2px solid black;
+  border-radius: 5px;
+  font-size: 15px;
+  color: black;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+    .button_row1 {
+        margin-top: 5px;
+        width: 60px;
+        height: 60px;
+        border:2px solid black;
+        background-color: white;
+        border-radius: 5px;
+        font-size: 15px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+    .button_row2 {
+        margin-top: 5px;
+        width: 60px;
+        height: 60px;
+        border:2px solid black;
+        background-color: white;
+        border-radius: 5px;
+        font-size: 15px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+    .button_row3 {
+        margin-top: 5px;
+        width: 60px;
+        height: 60px;
+        border:2px solid black;
+        background-color: white;
+        border-radius: 5px;
+        font-size: 15px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+    .in {
+        background-color: white;
+        margin-top: 5px;
+        width: 190px;
+        height: 60px;
+        border:2px solid black;
+         font-size: 15px;
+        border-radius: 5px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        
+    }
+
+</style>
+<body>
+    <div class="box">
+        <input type="text" class="textbox" disabled>
+        <div>
+            <button class="clear" value="clear">C</button>
+            <button class="nokta" value=",">,</button>
+            <button class="operator" value="=" >=</button>
+        </div>
+        <div>
+            <button class="button_row1"  value="7">7</button>
+            <button class="button_row1" value="6">8</button>
+            <button class="button_row1" value="9">9</button>
+            <button class="operator" value="/">/</button>
+        </div>
+        <div>
+            <button class="button_row2" value="4">4</button>
+            <button class="button_row2" value="5">5</button>
+            <button class="button_row2" value="6">6</button>
+            <button class="operator" value="x">x</button>
+        </div>
+        <div >
+            <button class="button_row3" value="1">1</button>
+            <button class="button_row3" value="2">2</button>
+            <button class="button_row3" value="3">3</button>
+            <button class="operator" value="-">-</button>
+        </div>
+        <div >
+            <button class="in" value="0">0</button>
+            
+            <button class="operator" value="+">+</button>
+        </div>
+    </div>
+    <script>
+        const display = document.querySelector('.textbox');
+        const keys = document.querySelector('.box');
+       
+
+        let displayValue ='0';
+        let firstValue = null;
+        let operator = null;
+        let waitingForSecondValue = false;
+
+        updateDisplay();
+
+        function updateDisplay (){
+            display.value = displayValue;   
+        }
+
+        keys.addEventListener('click' ,function (e){
+         const element = e.target;
+         if (!element.matches('button')) return;
+        
+
+         if(element.classList.contains('operator')){
+        
+         handleOperator(element.value);
+         updateDisplay();
+         return;
+         }
+         if(element.classList.contains('button_rows1')){
+            console.log ('button_rows1' , element.value);
+            return;
+         }
+         if(element.classList.contains('button_rows2')){
+            console.log ('button_rows2' , element.value);
+            return;
+         }
+         if(element.classList.contains('button_rows3')){
+            console.log ('button_rows3' , element.value);
+            return;
+         }
+         if(element.classList.contains('in')){
+            if(displayValue === '0'){
+                displayValue();
+                
+            }
+            else{
+                inputNumber(element.value);
+                updateDisplay();
+            }
+
+            console.log ('in' , element.value);
+            return;
+         }
+         if(element.classList.contains('nokta')){
+            console.log ('nokta' , element.value);
+            inputNokta();
+            updateDisplay();
+            return;
+         }
+         if(element.classList.contains('clear')){
+            clear();
+            updateDisplay();
+            console.log ('clear' , element.value);
+
+            return;
+         }
+        
+         //console.log('number',element.value);
+         inputNumber(element.value);
+         updateDisplay();
+        });
+        function inputNumber(num){
+            if(waitingForSecondValue){
+                displayValue = num;
+                waitingForSecondValue = false;
+            }
+            else {
+
+           
+           displayValue = displayValue === '0' ? num: displayValue + num;
+            }
+            console.log(displayValue, firstValue , operator , waitingForSecondValue);
+        }
+        function inputNokta(){
+            if(!displayValue.includes(','))
+            displayValue += ',';
+        }
+        function clear(){
+            displayValue = '0';
+        }
+       function handleOperator(nextOperator){
+        const value = parseFloat(displayValue);
+
+        if(operator && waitingForSecondValue){
+            operator = nextOperator;
+            return;
+        }
+
+        if(firstValue === null){
+            firstValue =value;
+        }else if(operator){
+            const result = calculate(firstValue , value , operator);
+            displayValue = String(result);
+            firstValue = result;
+        }
+        waitingForSecondValue = true;
+        operator = nextOperator;
+
+        console.log(displayValue, firstValue , operator , waitingForSecondValue);
+       }
+       function calculate (first , second , operator){
+        if(operator === '+'){
+            return first + second;
+        }
+        else if (operator === '-'){
+            return first - second;
+        }
+        else if (operator === 'x'){
+            return first * second;
+        }
+        else if (operator === '/'){
+            return first / second;
+        }
+        return second;
+       }
+
+    </script>
+</body>
+</html>
